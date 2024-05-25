@@ -1,28 +1,28 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getMovieReviews } from '../../services/api';
 
-const Reviews = () => {
+function Reviews() {
   const { movieId } = useParams();
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    getMovieReviews(movieId).then(data => setReviews(data.results));
+    fetch(
+      `https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=YOUR_API_KEY`
+    )
+      .then(response => response.json())
+      .then(data => setReviews(data.results));
   }, [movieId]);
 
   return (
     <div>
-      <h2>Reviews</h2>
+      <h1>Reviews</h1>
       <ul>
         {reviews.map(review => (
-          <li key={review.id}>
-            <h3>{review.author}</h3>
-            <p>{review.content}</p>
-          </li>
+          <li key={review.id}>{review.content}</li>
         ))}
       </ul>
     </div>
   );
-};
+}
 
 export default Reviews;
