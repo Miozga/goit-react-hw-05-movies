@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMovieCredits } from '../api';
@@ -8,8 +9,12 @@ function Cast() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const movieCast = await getMovieCredits(movieId);
-      setCast(movieCast);
+      try {
+        const movieCast = await getMovieCredits(movieId);
+        setCast(movieCast);
+      } catch (error) {
+        console.error('Error fetching movie credits:', error);
+      }
     };
     fetchData();
   }, [movieId]);
@@ -27,5 +32,15 @@ function Cast() {
     </div>
   );
 }
+
+Cast.propTypes = {
+  cast: PropTypes.arrayOf(
+    PropTypes.shape({
+      cast_id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      character: PropTypes.string.isRequired,
+    })
+  ),
+};
 
 export default Cast;
