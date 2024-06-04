@@ -1,10 +1,5 @@
 import React, { Suspense } from 'react';
-import {
-  Navigate,
-  Route,
-  BrowserRouter as Router,
-  Routes,
-} from 'react-router-dom';
+import { Navigate, Route, BrowserRouter as Router, Routes, Link } from 'react-router-dom';
 import './App.css';
 
 const Home = React.lazy(() => import('./components/Home'));
@@ -16,6 +11,16 @@ const Reviews = React.lazy(() => import('./components/Reviews'));
 const App = () => {
   return (
     <Router>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/movies">Movies</Link>
+          </li>
+        </ul>
+      </nav>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path="/" element={<Home />} />

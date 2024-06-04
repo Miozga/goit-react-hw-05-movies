@@ -1,5 +1,6 @@
-import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { getTrendingMovies } from '../api';
 
 function Home() {
@@ -22,7 +23,9 @@ function Home() {
       <h1>Popularne Filmy</h1>
       <ul>
         {movies.map(movie => (
-          <li key={movie.id}>{movie.title}</li>
+          <li key={movie.id}>
+            <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
+          </li>
         ))}
       </ul>
     </div>

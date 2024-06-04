@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { getMovieDetails } from '../api';
 
 function MovieDetails() {
@@ -25,6 +25,14 @@ function MovieDetails() {
     <div>
       <h1>{movie.title}</h1>
       <p>{movie.overview}</p>
+      <ul>
+        <li>
+          <Link to={`/movies/${movieId}/cast`}>Obsada</Link>
+        </li>
+        <li>
+          <Link to={`/movies/${movieId}/reviews`}>Recenzje</Link>
+        </li>
+      </ul>
     </div>
   );
 }

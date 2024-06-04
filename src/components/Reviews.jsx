@@ -1,21 +1,27 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { getMovieReviews } from '../api';
 
 function Reviews() {
   const { movieId } = useParams();
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=YOUR_API_KEY`
-    )
-      .then(response => response.json())
-      .then(data => setReviews(data.results));
+    const fetchData = async () => {
+      try {
+        const movieReviews = await getMovieReviews(movieId);
+        setReviews(movieReviews);
+      } catch (error) {
+        console.error('Error fetching movie reviews:', error);
+      }
+    };
+    fetchData();
   }, [movieId]);
 
   return (
     <div>
-      <h1>Reviews</h1>
+      <h1>Recenzje</h1>
       <ul>
         {reviews.map(review => (
           <li key={review.id}>{review.content}</li>
@@ -24,5 +30,14 @@ function Reviews() {
     </div>
   );
 }
+
+Reviews.propTypes = {
+  reviews: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      content: PropTypes.string.isRequired,
+    })
+  ),
+};
 
 export default Reviews;

@@ -1,13 +1,13 @@
-import PropTypes from 'prop-types';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { searchMovies } from '../api';
 
 function Movies() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
 
-  const handleSearch = async e => {
+  const handleSearch = async (e) => {
     e.preventDefault();
     try {
       const movies = await searchMovies(query);
@@ -24,7 +24,7 @@ function Movies() {
         <input
           type="text"
           value={query}
-          onChange={e => setQuery(e.target.value)}
+          onChange={(e) => setQuery(e.target.value)}
         />
         <button type="submit">Szukaj</button>
       </form>
